@@ -3,7 +3,7 @@ From iris.proofmode Require Import proofmode.
 
 Section bi_cola.
 
-  (* Definition from Pous' coinduction library *)
+  (* Definition of Complete Lattice from Pous' coinduction library *)
   Class CompleteLattice (X: Type) := {
     weq: relation X;
     leq: relation X;
@@ -16,8 +16,6 @@ Section bi_cola.
     CL_props:
     (* PreOrder_leq:> *) PreOrder leq /\
     (* weq_spec: *) (forall x y, weq x y <-> (leq x y /\ leq y x)) /\
-    (* sup_spec: forall P z, sup P <= z <-> forall x, P x -> x <= z; *)
-    (* inf_spec: forall P z, z <= inf P <-> forall x, P x -> z <= x; *)
     (* sup_spec: *) (forall I P f z, leq (@sup' I P f) z <-> forall i, P i -> leq (f i) z) /\
     (* inf_spec: *) (forall I P f z, leq z (@inf' I P f) <-> forall i, P i -> leq z (f i)) /\
     (* cup_spec: *) (forall x y z, leq (cup x y) z <-> (leq x z /\ leq y z)) /\
@@ -125,6 +123,7 @@ Section bi_cola_bi.
     #[global] PreOrder_Reflexive :: Reflexive R  | 2;
     #[global] PreOrder_Transitive :: Transitive R | 2 }.
 
+  (* Definition of Complete Lattice, embedded in the [bi] logic *)
   Class CompleteLattice_ (X : Type) := {
     _weq: X -> X -> PROP;
     _leq: X -> X -> PROP;
